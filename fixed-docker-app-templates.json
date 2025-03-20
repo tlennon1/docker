@@ -1,0 +1,1047 @@
+{
+  "version": "2",
+  "templates": [
+    {
+      "type": 3,
+      "title": "Immich {shmolf}",
+      "name": "immich",
+      "categories": [
+        "Photos",
+        "Backup"
+      ],
+      "description": "Self-hosted backup solution for photos and videos on mobile device.",
+      "logo": "https://raw.githubusercontent.com/shmolf/portainer-templates/main/assets/logos/immich-logo.svg",
+      "note": "&#8203;:contentReference[oaicite:0]{index=0} ",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "label": "PGID",
+          "name": "PGID",
+          "default": "1000"
+        },
+        {
+          "label": "Immich version",
+          "name": "IMMICH_VERSION",
+          "default": "release",
+          "description": "To want to lock to a specific tag, provide a value such as 'v1.71.0'"
+        },
+        {
+          "label": "Database username",
+          "name": "DB_USERNAME",
+          "default": "postgres"
+        },
+        {
+          "label": "Database password",
+          "name": "DB_PASSWORD",
+          "default": "please-change-this-to-a-random-secret",
+          "description": "This should be changed to a random secret"
+        },
+        {
+          "label": "Database name",
+          "name": "DB_DATABASE_NAME",
+          "default": "immich"
+        },
+        {
+          "label": "Database hostname",
+          "name": "DB_HOSTNAME",
+          "default": "immich_postgres",
+          "description": "The default value references a service within the stack"
+        },
+        {
+          "label": "File backup location",
+          "name": "UPLOAD_LOCATION",
+          "default": "/portainer/Files/AppData/Immich/upload",
+          "description": "You can leave this path as-is, and the system will auto-create the needed folders. Feel free to change if you desire an alternative location."
+        },
+        {
+          "label": "Redis hostname",
+          "name": "REDIS_HOSTNAME",
+          "default": "immich_redis",
+          "description": "The default value references a service within the stack"
+        },
+        {
+          "default": "2283",
+          "label": "Http Port",
+          "name": "PORT"
+        }
+      ],
+      "platform": "linux",
+      "repository": {
+        "stackfile": "stacks/immich/docker-compose.yml",
+        "url": "https://github.com/shmolf/portainer-templates"
+      },
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 3,
+      "title": "Penpot (http) {shmolf}",
+      "name": "penpot-http",
+      "categories": [
+        "Graphicdesign"
+      ],
+      "description": "Penpot is the first Open Source design and prototyping platform meant for cross-domain teams.",
+      "logo": "https://raw.githubusercontent.com/shmolf/portainer-templates/main/assets/logos/penpot-logo.svg",
+      "note": "&#8203;:contentReference[oaicite:1]{index=1} . See :contentReference[oaicite:2]{index=2}  for more details regarding the flags.",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "label": "PGID",
+          "name": "PGID",
+          "default": "1000"
+        },
+        {
+          "label": "Frontend Flags",
+          "name": "PENPOT_FLAGS_FE",
+          "default": "enable-registration disable-secure-session-cookies enable-insecure-register enable-login-with-password"
+        },
+        {
+          "label": "Backend Flags",
+          "name": "PENPOT_FLAGS_BE",
+          "default": "enable-registration disable-secure-session-cookies enable-insecure-register disable-email-verification"
+        },
+        {
+          "label": "Public URI",
+          "name": "PUBLIC_URI",
+          "default": "http://192.168.1.1:8624",
+          "description": "Public URI. If you are going to expose this instance to the internet and use it under different domain than 'localhost', you will need to adjust it to the final domain."
+        },
+        {
+          "label": "Penpot Telemetry Enabled?",
+          "name": "TELEMETRY_ENABLED",
+          "select": [
+            {
+              "text": "Yes, enable telemetry",
+              "value": "true",
+              "default": true
+            },
+            {
+              "text": "No, disable telemetry",
+              "value": "false"
+            }
+          ],
+          "description": "When enabled, a periodical process will send anonymous data about this instance."
+        },
+        {
+          "default": "8624",
+          "label": "Http Port",
+          "name": "PORT",
+          "description": "This should match the port specified in the Public URI, or 80/443 if using standard ports."
+        }
+      ],
+      "platform": "linux",
+      "repository": {
+        "stackfile": "stacks/penpot/docker-compose-http.yml",
+        "url": "https://github.com/shmolf/portainer-templates"
+      },
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 1,
+      "title": "Watchtower {shmolf}",
+      "name": "watchtower",
+      "categories": [
+        "Docker"
+      ],
+      "description": "A container-based solution for automating Docker container base image updates",
+      "note": "&#8203;:contentReference[oaicite:3]{index=3} ",
+      "logo": "https://raw.githubusercontent.com/shmolf/portainer-templates/main/assets/logos/watchtower-logo.png",
+      "platform": "linux",
+      "image": "containrrr/watchtower",
+      "ports": [
+        "9001/tcp"
+      ],
+      "restart_policy": "always",
+      "volumes": [
+        {
+          "container": "/var/run/docker.sock",
+          "bind": "/var/run/docker.sock"
+        }
+      ],
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 1,
+      "title": "Stirling PDF {shmolf}",
+      "name": "stirling-pdf",
+      "categories": [
+        "Tools",
+        "Pdf"
+      ],
+      "description": "Your locally hosted one-stop-shop for all your PDF needs.",
+      "note": "To support multiple languages for OCR, per the :contentReference[oaicite:4]{index=4} , download your Tess Data from :contentReference[oaicite:5]{index=5} .   \nThen, place said 'traineddata' files into `/portainer/Files/AppData/Libraries/StirlingPDF/tessdata`   \nFor more information about login, read :contentReference[oaicite:6]{index=6} .",
+      "logo": "https://raw.githubusercontent.com/shmolf/portainer-templates/main/assets/logos/stirling-pdf.svg",
+      "platform": "linux",
+      "image": "frooodle/s-pdf:0.18.1",
+      "ports": [
+        "5417:8080/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "env": [
+        {
+          "label": "PUID",
+          "name": "PUID",
+          "default": "1000"
+        },
+        {
+          "label": "PGID",
+          "name": "PGID",
+          "default": "1000"
+        },
+        {
+          "label": "Enable Login",
+          "name": "DOCKER_ENABLE_SECURITY",
+          "select": [
+            {
+              "text": "Yes, enable login",
+              "value": "true"
+            },
+            {
+              "text": "No, disable login",
+              "value": "false",
+              "default": true
+            }
+          ],
+          "description": "If you want to enable the login, you'll also need to enable login through the Config's settings.yml"
+        }
+      ],
+      "volumes": [
+        {
+          "bind": "/portainer/Files/AppData/Config/StirlingPDF",
+          "container": "/configs"
+        },
+        {
+          "bind": "/portainer/Files/AppData/Libraries/StirlingPDF/tessdata",
+          "container": "/usr/share/tesseract-ocr/5/tessdata"
+        }
+      ],
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 1,
+      "title": "Terraria Server {shmolf}",
+      "name": "terraria-server",
+      "categories": [
+        "Games"
+      ],
+      "description": "Docker container for a Terraria dedicated server.",
+      "note": "Link to :contentReference[oaicite:7]{index=7}  for setting up the server.",
+      "logo": "https://raw.githubusercontent.com/shmolf/portainer-templates/main/assets/logos/terraria-server.png",
+      "platform": "linux",
+      "image": "passivelemon/terraria-docker:latest",
+      "ports": [
+        "7777:7777/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "env": [
+        {
+          "label": "PUID",
+          "name": "PUID",
+          "default": "1000"
+        },
+        {
+          "label": "PGID",
+          "name": "PGID",
+          "default": "1000"
+        },
+        {
+          "label": "World name",
+          "name": "WORLD",
+          "default": "dockerworld"
+        }
+      ],
+      "volumes": [
+        {
+          "bind": "/portainer/Files/AppData/Libraries/StirlingPDF/tessdata",
+          "container": "/usr/share/tesseract-ocr/5/tessdata"
+        }
+      ],
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 1,
+      "title": "Cockpit {shmolf}",
+      "name": "cockpit-cms",
+      "categories": [
+        "Cms"
+      ],
+      "description": "Cockpit is a headless CMS with an API-first approach that puts content first.",
+      "note": "Link to :contentReference[oaicite:8]{index=8} .  \nAfter deployment, continue to setup by visiting :contentReference[oaicite:9]{index=9} ",
+      "logo": "https://raw.githubusercontent.com/shmolf/portainer-templates/main/assets/logos/cockpit.svg",
+      "platform": "linux",
+      "image": "agentejo/cockpit:latest",
+      "ports": [
+        "8088:80/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 3,
+      "title": "Asciinema {shmolf}",
+      "name": "asciinema",
+      "categories": [
+        "Tools"
+      ],
+      "description": "Self-hosted terminal recording and playback",
+      "logo": "https://raw.githubusercontent.com/shmolf/portainer-templates/main/assets/logos/asciinema.svg",
+      "note": "&#8203;:contentReference[oaicite:10]{index=10}   \nFor the application secret key, you can use the terminal command `tr -dc A-Za-z0-9 </dev/urandom | head -c 64; echo`",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "label": "PGID",
+          "name": "PGID",
+          "default": "1000"
+        },
+        {
+          "label": "Hostname",
+          "name": "HOST_NAME",
+          "default": "localhost",
+          "description": "Localhost for use within the application runtime"
+        },
+        {
+          "label": "Host Port",
+          "name": "HOST_PORT",
+          "default": "3033",
+          "description": "Published port for use within the application runtime"
+        },
+        {
+          "label": "Secret Application Key",
+          "name": "SECRET_KEY",
+          "default": "please-change-this-to-a-random-secret"
+        }
+      ],
+      "platform": "linux",
+      "repository": {
+        "stackfile": "stacks/asciinema/docker-compose.yml",
+        "url": "https://github.com/shmolf/portainer-templates"
+      },
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 1,
+      "title": "Code-server {shmolf}",
+      "name": "code-server",
+      "note": "Portainer App Templates by :contentReference[oaicite:11]{index=11}  based on data provided by :contentReference[oaicite:12]{index=12} .\n\nThis will bind to the following directory on the host filesystem:\n\n`/portainer/Files/AppData/Config/code-server `\n\n  * Proxy Domain: See :contentReference[oaicite:13]{index=13} \n  * Timezones: See :contentReference[oaicite:14]{index=14} \n\n",
+      "description": "Code-server (https://coder.com) is VS Code running on a remote server, accessible through the browser. - Code on your Chromebook, tablet, and laptop with a consistent dev environment. - If you have a Windows or Mac workstation, more easily develop for Linux. - Take advantage of large cloud servers to speed up tests, compilations, downloads, and more. - Preserve battery life when you're on the go. - All intensive computation runs on your server. - You're no longer running excess instances of Chrome.",
+      "categories": [
+        "Development"
+      ],
+      "platform": "linux",
+      "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/code-server-banner.png",
+      "image": "linuxserver/code-server:latest",
+      "env": [
+        {
+          "name": "PUID",
+          "label": "PUID",
+          "default": "1000",
+          "description": "for UserID"
+        },
+        {
+          "name": "PGID",
+          "label": "PGID",
+          "default": "1000",
+          "description": "for GroupID"
+        },
+        {
+          "name": "TZ",
+          "label": "TZ",
+          "default": "Europe/Amsterdam",
+          "description": "specify a timezone to use"
+        },
+        {
+          "name": "PASSWORD",
+          "label": "PASSWORD",
+          "default": "password",
+          "description": "Optional web gui password, if `PASSWORD` or `HASHED_PASSWORD` is not provided, there will be no auth."
+        },
+        {
+          "name": "HASHED_PASSWORD",
+          "label": "HASHED_PASSWORD",
+          "default": "",
+          "description": "Optional web gui password, overrides `PASSWORD`, instructions on how to create it is below."
+        },
+        {
+          "name": "SUDO_PASSWORD",
+          "label": "SUDO_PASSWORD",
+          "default": "password",
+          "description": "If this optional variable is set, user will have sudo access in the code-server terminal with the specified password."
+        },
+        {
+          "name": "SUDO_PASSWORD_HASH",
+          "label": "SUDO_PASSWORD_HASH",
+          "default": "",
+          "description": "Optionally set sudo password via hash (takes priority over `SUDO_PASSWORD` var). Format is `$type$salt$hashed`."
+        },
+        {
+          "name": "PROXY_DOMAIN",
+          "label": "PROXY_DOMAIN",
+          "default": "code-server.my.domain",
+          "description": "If this optional variable is set, this domain will be proxied for subdomain proxying."
+        },
+        {
+          "name": "DEFAULT_WORKSPACE",
+          "label": "DEFAULT_WORKSPACE",
+          "default": "/config/workspace",
+          "description": "If this optional variable is set, code-server will open this directory by default"
+        }
+      ],
+      "ports": [
+        "8443:8443/tcp"
+      ],
+      "volumes": [
+        {
+          "container": "/config",
+          "bind": "/portainer/Files/AppData/Config/code-server"
+        }
+      ],
+      "restart_policy": "unless-stopped",
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 3,
+      "title": "Infisical {shmolf}",
+      "name": "infisical",
+      "categories": [
+        "Secrets",
+        "Management"
+      ],
+      "description": "The open-source secret management platform: Sync secrets/configs across your team/infrastructure and prevent secret leaks.",
+      "logo": "https://raw.githubusercontent.com/shmolf/portainer-templates/main/assets/logos/infisical-black.webp",
+      "note": "&#8203;:contentReference[oaicite:15]{index=15} ",
+      "env": [
+        {
+          "default": "8078",
+          "label": "Http Port",
+          "name": "PORT"
+        },
+        {
+          "default": "c6606cd2daad581c4de96531427aae0d",
+          "label": "Encryption Key",
+          "name": "ENCRYPTION_KEY",
+          "description": "Required key for platform encryption/decryption ops. 32 character hex string"
+        },
+        {
+          "default": "5lrMXKKWCVocS/uerPsl7V+TX/aaUaI7iDkgl3tSmLE=",
+          "label": "JWT Key",
+          "name": "AUTH_SECRET",
+          "description": "Required secrets to sign JWT tokens"
+        },
+        {
+          "default": "postgres_password",
+          "label": "Postgres Password",
+          "name": "POSTGRES_PASSWORD"
+        },
+        {
+          "default": "infisical",
+          "label": "Postgres User",
+          "name": "POSTGRES_USER"
+        },
+        {
+          "default": "infisical",
+          "label": "Postgres Database",
+          "name": "POSTGRES_DB"
+        },
+        {
+          "default": "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}",
+          "label": "DB Connection URI",
+          "name": "DB_CONNECTION_URI"
+        },
+        {
+          "default": "http://localhost:8078",
+          "label": "Website URL",
+          "name": "SITE_URL"
+        },
+        {
+          "default": "redis://redis:6379",
+          "label": "Redis URL",
+          "name": "REDIS_URL"
+        },
+        {
+          "default": "",
+          "label": "Email Host (Optional)",
+          "name": "SMTP_HOST"
+        },
+        {
+          "default": "",
+          "label": "Email Port (Optional)",
+          "name": "SMTP_PORT"
+        },
+        {
+          "default": "",
+          "label": "Email Name (Optional)",
+          "name": "SMTP_NAME"
+        },
+        {
+          "default": "",
+          "label": "Email Username (Optional)",
+          "name": "SMTP_USERNAME"
+        },
+        {
+          "default": "",
+          "label": "Email Password (Optional)",
+          "name": "SMTP_PASSWORD"
+        },
+        {
+          "default": "",
+          "label": "Heroku Client ID (Optional)",
+          "name": "CLIENT_ID_HEROKU",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Heroku Client Secret (Optional)",
+          "name": "CLIENT_SECRET_HEROKU",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Vercel Client ID (Optional)",
+          "name": "CLIENT_ID_VERCEL",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Vercel Client Secret (Optional)",
+          "name": "CLIENT_SECRET_VERCEL",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Vercel Client Slug (Optional)",
+          "name": "CLIENT_SLUG_VERCEL",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Netlify Client ID (Optional)",
+          "name": "CLIENT_ID_NETLIFY",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Netlify Client Secret (Optional)",
+          "name": "CLIENT_SECRET_NETLIFY",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "GitHub Client ID (Optional)",
+          "name": "CLIENT_ID_GITHUB",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "GitHub Client Secret (Optional)",
+          "name": "CLIENT_SECRET_GITHUB",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "GitLab Client ID (Optional)",
+          "name": "CLIENT_ID_GITLAB",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "GitLab Client Secret (Optional)",
+          "name": "CLIENT_SECRET_GITLAB",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Bitbucket Client ID (Optional)",
+          "name": "CLIENT_ID_BITBUCKET",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Bitbucket Client Secret (Optional)",
+          "name": "CLIENT_SECRET_BITBUCKET",
+          "description": "Optional, only needed if integration is used"
+        },
+        {
+          "default": "",
+          "label": "Sentry DSN (Optional)",
+          "name": "SENTRY_DSN",
+          "description": "Optional, only needed if monitoring is used"
+        },
+        {
+          "default": "",
+          "label": "Google Client ID (Optional)",
+          "name": "CLIENT_ID_GOOGLE_LOGIN",
+          "description": "Optional, only needed if SSO is used"
+        },
+        {
+          "default": "",
+          "label": "Google Client Secret (Optional)",
+          "name": "CLIENT_SECRET_GOOGLE_LOGIN",
+          "description": "Optional, only needed if SSO is used"
+        },
+        {
+          "default": "",
+          "label": "GitHub Client ID (Optional)",
+          "name": "CLIENT_ID_GITHUB_LOGIN",
+          "description": "Optional, only needed if SSO is used"
+        },
+        {
+          "default": "",
+          "label": "GitHub Client Secret (Optional)",
+          "name": "CLIENT_SECRET_GITHUB_LOGIN",
+          "description": "Optional, only needed if SSO is used"
+        },
+        {
+          "default": "",
+          "label": "GitLab Client ID (Optional)",
+          "name": "CLIENT_ID_GITLAB_LOGIN",
+          "description": "Optional, only needed if SSO is used"
+        },
+        {
+          "default": "",
+          "label": "GitLab Client Secret (Optional)",
+          "name": "CLIENT_SECRET_GITLAB_LOGIN",
+          "description": "Optional, only needed if SSO is used"
+        },
+        {
+          "default": "",
+          "label": "Captcha Secret (Optional)",
+          "name": "CAPTCHA_SECRET",
+          "description": "Optional, only needed if captcha is used"
+        },
+        {
+          "default": "",
+          "label": "Captcha Site Key (Optional)",
+          "name": "NEXT_PUBLIC_CAPTCHA_SITE_KEY",
+          "description": "Optional, only needed if captcha is used"
+        },
+        {
+          "default": "",
+          "label": "Plain API Key (Optional)",
+          "name": "PLAIN_API_KEY",
+          "description": "Optional, only needed if Plain is used"
+        },
+        {
+          "default": "",
+          "label": "Plain Wish Label IDs (Optional)",
+          "name": "PLAIN_WISH_LABEL_IDS",
+          "description": "Optional, only needed if Plain is used"
+        }
+      ],
+      "platform": "linux",
+      "repository": {
+        "stackfile": "stacks/infisical/compose.yml",
+        "url": "https://github.com/shmolf/portainer-templates"
+      },
+      "restart_policy": "unless-stopped",
+      "maintainer": " https://github.com/shmolf/portainer-templates/"
+    },
+    {
+      "type": 1,
+      "title": "The templates created by Technorabilia have been moved",
+      "description": "The new location is https://raw.githubusercontent.com/technorabilia/portainer-templates/main/lsio/templates/templates.json",
+      "platform": "linux",
+      "maintainer": " https://github.com/technorabilia/portainer-templates/",
+      "categories": []
+    },
+    {
+      "categories": [
+        "Productivity",
+        "Social"
+      ],
+      "description": "Open source collaborative knowledge base for modern teams",
+      "env": [
+        {
+          "default": "production",
+          "label": "NODE_ENV",
+          "name": "NODE_ENV"
+        },
+        {
+          "default": "",
+          "label": "SECRET_KEY",
+          "name": "SECRET_KEY"
+        },
+        {
+          "default": "",
+          "label": "UTILS_SECRET",
+          "name": "UTILS_SECRET"
+        },
+        {
+          "default": "",
+          "label": "DATABASE_URL",
+          "name": "DATABASE_URL"
+        },
+        {
+          "default": "",
+          "label": "DATABASE_URL_TEST",
+          "name": "DATABASE_URL_TEST"
+        },
+        {
+          "default": "",
+          "label": "DATABASE_CONNECTION_POOL_MIN",
+          "name": "DATABASE_CONNECTION_POOL_MIN"
+        },
+        {
+          "default": "",
+          "label": "DATABASE_CONNECTION_POOL_MAX",
+          "name": "DATABASE_CONNECTION_POOL_MAX"
+        },
+        {
+          "default": "",
+          "label": "REDIS_URL",
+          "name": "REDIS_URL"
+        },
+        {
+          "default": "",
+          "label": "URL",
+          "name": "URL"
+        },
+        {
+          "default": "3000",
+          "label": "PORT",
+          "name": "PORT"
+        },
+        {
+          "default": "",
+          "label": "COLLABORATION_URL",
+          "name": "COLLABORATION_URL"
+        },
+        {
+          "default": "",
+          "label": "GOOGLE_CLIENT_ID",
+          "name": "GOOGLE_CLIENT_ID"
+        },
+        {
+          "default": "",
+          "label": "GOOGLE_CLIENT_SECRET",
+          "name": "GOOGLE_CLIENT_SECRET"
+        },
+        {
+          "default": "",
+          "label": "SSL_KEY",
+          "name": "SSL_KEY"
+        },
+        {
+          "default": "",
+          "label": "SSL_CERT",
+          "name": "SSL_CERT"
+        },
+        {
+          "default": "true",
+          "label": "FORCE_HTTPS",
+          "name": "FORCE_HTTPS"
+        },
+        {
+          "default": "true",
+          "label": "ENABLE_UPDATES",
+          "name": "ENABLE_UPDATES"
+        },
+        {
+          "default": "1",
+          "label": "WEB_CONCURRENCY",
+          "name": "WEB_CONCURRENCY"
+        },
+        {
+          "default": "5120000",
+          "label": "MAXIMUM_IMPORT_SIZE",
+          "name": "MAXIMUM_IMPORT_SIZE"
+        },
+        {
+          "default": "http",
+          "label": "DEBUG",
+          "name": "DEBUG"
+        },
+        {
+          "default": "info",
+          "label": "LOG_LEVEL",
+          "name": "LOG_LEVEL"
+        },
+        {
+          "default": "",
+          "label": "GOOGLE_ANALYTICS_ID",
+          "name": "GOOGLE_ANALYTICS_ID"
+        },
+        {
+          "default": "",
+          "label": "SENTRY_DSN",
+          "name": "SENTRY_DSN"
+        },
+        {
+          "default": "",
+          "label": "SENTRY_TUNNEL",
+          "name": "SENTRY_TUNNEL"
+        },
+        {
+          "default": "",
+          "label": "SMTP_HOST",
+          "name": "SMTP_HOST"
+        },
+        {
+          "default": "",
+          "label": "SMTP_PORT",
+          "name": "SMTP_PORT"
+        },
+        {
+          "default": "",
+          "label": "SMTP_USERNAME",
+          "name": "SMTP_USERNAME"
+        },
+        {
+          "default": "",
+          "label": "SMTP_PASSWORD",
+          "name": "SMTP_PASSWORD"
+        },
+        {
+          "default": "",
+          "label": "SMTP_FROM_EMAIL",
+          "name": "SMTP_FROM_EMAIL"
+        },
+        {
+          "default": "",
+          "label": "SMTP_REPLY_EMAIL",
+          "name": "SMTP_REPLY_EMAIL"
+        },
+        {
+          "default": "",
+          "label": "SMTP_TLS_CIPHERS",
+          "name": "SMTP_TLS_CIPHERS"
+        },
+        {
+          "default": "true",
+          "label": "SMTP_SECURE",
+          "name": "SMTP_SECURE"
+        },
+        {
+          "default": "en_US",
+          "label": "DEFAULT_LANGUAGE",
+          "name": "DEFAULT_LANGUAGE"
+        },
+        {
+          "default": "true",
+          "label": "RATE_LIMITER_ENABLED",
+          "name": "RATE_LIMITER_ENABLED"
+        },
+        {
+          "default": "1000",
+          "label": "RATE_LIMITER_REQUESTS",
+          "name": "RATE_LIMITER_REQUESTS"
+        },
+        {
+          "default": "60",
+          "label": "RATE_LIMITER_DURATION_WINDOW",
+          "name": "RATE_LIMITER_DURATION_WINDOW"
+        }
+      ],
+      "logo": "https://avatars.githubusercontent.com/u/1765001",
+      "name": "outline",
+      "note": "Open source collaborative knowledge base for modern teams",
+      "platform": "linux",
+      "repository": {
+        "stackfile": "sources/stacks/outline.yml",
+        "url": "https://github.com/lissy93/portainer-templates"
+      },
+      "restart_policy": "unless-stopped",
+      "title": "Outline",
+      "type": 3
+    },
+    {
+      "categories": [
+        "Other"
+      ],
+      "description": "AdGuard Home is a network-wide software for blocking ads & tracking. After you set it up, it’ll cover ALL your home devices, and you don’t need any client-side software for that. With the rise of Internet-Of-Things and connected devices, it becomes more and more important to be able to control your whole network.",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "100",
+          "label": "PGID",
+          "name": "PGID"
+        },
+        {
+          "label": "CONTEXT_PATH",
+          "name": "CONTEXT_PATH",
+          "default": "adguard home"
+        }
+      ],
+      "image": "adguard/adguardhome:latest",
+      "logo": "https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Images/adguard.png",
+      "name": "adguard",
+      "platform": "linux",
+      "ports": [
+        "53:53/tcp",
+        "53:53/udp",
+        "67:67/udp",
+        "68:68/tcp",
+        "68:68/udp",
+        "80:80/tcp",
+        "443:443/tcp",
+        "853:853/tcp",
+        "3000:3000/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Adguard",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/portainer/Files/AppData/Adguard/Workdir",
+          "container": "/opt/adguardhome/work"
+        },
+        {
+          "bind": "/portainer/Files/AppData/Adguard/Conf",
+          "container": "/opt/adguardhome/conf"
+        }
+      ],
+      "maintainer": " https://github.com/Qballjos/portainer_templates/"
+    },
+    {
+      "categories": [
+        "Music"
+      ],
+      "description": "Airsonic is a free, web-based media streamer, providing ubiqutous access to your music. Use it to share your music with friends, or to listen to your own music while at work. You can stream to multiple players simultaneously, for instance to one player in your kitchen and another in your living room.",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "100",
+          "label": "PGID",
+          "name": "PGID"
+        },
+        {
+          "label": "CONTEXT_PATH",
+          "name": "CONTEXT_PATH",
+          "default": "airsonic"
+        },
+        {
+          "label": "JAVA_OPTS",
+          "name": "JAVA_OPTS",
+          "default": "-Xms256m -Xmx512m"
+        }
+      ],
+      "image": "linuxserver/airsonic:latest",
+      "logo": "https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Images/airsonic-logo.png",
+      "name": "airsonic",
+      "platform": "linux",
+      "ports": [
+        "4040:4040/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Airsonic",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/portainer/Music",
+          "container": "/music"
+        },
+        {
+          "bind": "/portainer/Files/AppData/Airsonic/Playlists",
+          "container": "/playlists"
+        },
+        {
+          "bind": "/portainer/Podcasts",
+          "container": "/podcasts"
+        },
+        {
+          "bind": "/portainer/Files/AppData/Airsonic/Media",
+          "container": "/media"
+        },
+        {
+          "bind": "/portainer/Files/AppData/Config/Airsonic/",
+          "container": "/config"
+        }
+      ],
+      "maintainer": " https://github.com/Qballjos/portainer_templates/"
+    },
+    {
+      "categories": [
+        "Other",
+        "Tools"
+      ],
+      "description": "C# application with primary purpose of farming Steam cards from multiple accounts simultaneously.",
+      "env": [
+        {
+          "default": "1000",
+          "label": "PUID",
+          "name": "PUID"
+        },
+        {
+          "default": "100",
+          "label": "PGID",
+          "name": "PGID"
+        }
+      ],
+      "image": "justarchi/archisteamfarm:latest",
+      "logo": "https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Images/ASF.png",
+      "name": "ArchiSteamFarm",
+      "note": "Requires an ASF.json with headless enabled, IPCPassword set and an IPC.config described by the wiki in order to work. Please generate the former :contentReference[oaicite:16]{index=16}  and copy the latter from :contentReference[oaicite:17]{index=17} .",
+      "platform": "linux",
+      "ports": [
+        "1242:1242/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "ArchiSteamFarm",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/Config",
+          "container": "/app/config"
+        },
+        {
+          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/Plugins",
+          "container": "/app/plugins/customplugins"
+        },
+        {
+          "bind": "/portainer/Files/AppData/Config/ArchiSteamFarm/Logs",
+          "container": "/app/logs"
+        }
+      ],
+      "maintainer": " https://github.com/Qballjos/portainer_templates/"
+    },
+    {
+      "categories": [
+        "Other",
+        "Tools",
+        "Authentication"
+      ],
+      "description": "An open-source authentication and authorization server providing 2-factor authentication and single sign-on (SSO) for your applications via a web portal.",
+      "env": [
+        {
+          "label": "TZ",
+          "name": "TZ"
+        }
+      ],
+      "image": "authelia/authelia:latest",
+      "logo": "https://raw.githubusercontent.com/Qballjos/portainer_templates/master/Images/authelia.png",
+      "name": "authelia",
+      "platform": "linux",
+      "ports": [
+        "9091:9091/tcp"
+      ],
+      "restart_policy": "unless-stopped",
+      "title": "Authelia",
+      "type": 1,
+      "volumes": [
+        {
+          "bind": "/config",
+          "container": "/config"
+        }
+      ],
+      "maintainer": " https://github.com/Qballjos/portainer_templates/"
+    }
+  ]
+}
